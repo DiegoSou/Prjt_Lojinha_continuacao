@@ -20,20 +20,20 @@ public class Cliente extends Pessoa implements Comparable<Cliente> {
 		super();
 	}
 
-	public Cliente(String nome, String rg, String cpf, Email email, Telefone telefone, int idade, Endereco endereco, String nomeUsuario, String senhaUsuario) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+	public Cliente(String nome, String rg, String cpf, Email email, Telefone telefone, int idade, Endereco endereco, String nomeUsuario, String senhaUsu) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		super(nome, rg, cpf, email, telefone, idade, endereco);
 		this.nomeUsuario = nomeUsuario;
-		this.setSenhaUsuario(senhaUsuario);
+		this.setSenhaUsuario(senhaUsu);
 		
-		this.setIdUsuario();
+		this.setIdUsuario(nomeUsuario, senhaUsu);
 	}
 
 	public String getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario() {
-		this.idUsuario = (this.nomeUsuario + "" + this.senhaUsuario);
+	public void setIdUsuario(String nome, String senha) {
+		this.idUsuario = (nome + "@" + senha);
 	}
 
 	public String getNomeUsuario() {
@@ -49,7 +49,8 @@ public class Cliente extends Pessoa implements Comparable<Cliente> {
 	}
 
 	public void setSenhaUsuario(String senhaUsuario) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-		this.senhaUsuario = Utilidades.criptografar(senhaUsuario);
+//		this.senhaUsuario = Utilidades.criptografar(senhaUsuario);
+		this.senhaUsuario = senhaUsuario;
 	}
 
 	public List<Produto> getCarrinho() {

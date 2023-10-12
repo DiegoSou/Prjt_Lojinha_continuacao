@@ -42,10 +42,10 @@ public class Pessoa {
 	}
 	
 	public void setRg(String rg) {
-		if(rg.length() > 12 || rg.length() < 7 || Utilidades.possuiLetras(rg)) {
+		if(rg.length() > 14 || rg.length() < 7 || Utilidades.possuiLetras(rg)) {
 			throw new PessoaException("[-] Rg Inválido");
 		}else {
-			this.rg = rg;
+			this.rg = rg.replaceAll("-", "");
 		}
 	}
 	
@@ -54,10 +54,11 @@ public class Pessoa {
 	}
 	
 	public void setCpf(String cpf) {
-		if(cpf.length() > 11 || cpf.length() < 10 || Utilidades.possuiLetras(cpf)) {
+		if(cpf.length() > 15 || cpf.length() < 10 || Utilidades.possuiLetras(cpf)) {
 			throw new PessoaException("[-] Cpf Inválido");
+		}else {
+			this.cpf = cpf.replace(".", "").replaceAll("-", "");
 		}
-		this.cpf = cpf;
 	}
 	
 	public Email getEmail() {

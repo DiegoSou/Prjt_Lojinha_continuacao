@@ -118,7 +118,6 @@ public class ConstrutoresAuxil {
 	}
 	
 	public static Cliente construirCliente(ResultSet rs) throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
-		String idUsuario = rs.getString("IdUsuario");
 		String nomeUsr = rs.getString("NomeUsr");
 		String senhaUsr = rs.getString("SenhaUsr");
 		Pessoa clienteP = construirPessoa(rs);
@@ -139,11 +138,11 @@ public class ConstrutoresAuxil {
 	}
 	
 	public static Endereco construirEnd(ResultSet rs) throws SQLException {
-		return new Endereco(rs.getString("IdEndereco"), rs.getString("NumCep"), rs.getInt("NumCasa"), rs.getString("Complemento"), rs.getString("PontoRef"));
+		return new Endereco(rs.getString("IdEndereco"), (rs.getString("NumCep").replaceAll("-", "")), rs.getInt("NumCasa"), rs.getString("Complemento"), rs.getString("PontoRef"));
 	}
 	
 	public static Telefone construirTelefone(String s) throws SQLException {
-		String tel = s.replaceAll("/+", "").replaceAll(" ", "");
+		String tel = s.replaceAll("/+", "").replaceAll(" ", "").replaceAll("-", "");
 		char[] digest = tel.toCharArray();
 	
 		String pais = digest[0] + "" + digest[1] + "" + digest[2];

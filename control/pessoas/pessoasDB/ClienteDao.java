@@ -79,6 +79,37 @@ public class ClienteDao {
 		}
 	}
 	
+	public Cliente findById(String idUsuario){
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Cliente cli = null;
+		
+		try {
+			boolean c = conn.abrirConexao();
+			ps = conn.getConn().prepareStatement(
+					"SELECT Cliente.*, Pessoa.*, Endereco.* FROM Cliente"
+					+ " INNER JOIN Pessoa ON Cliente.ClienteP = Pessoa.Rg"
+					+ " INNER JOIN Endereco ON Pessoa.EnderecoPessoa = Endereco.IdEndereco"
+					+ " WHERE IdUsuario=?");
+			
+			ps.setString(1, idUsuario);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				cli = ConstrutoresAuxil.construirCliente(rs);
+			}
+			
+			return cli;
+		} catch (ConexaoException | SQLException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			conn.fecharStatement(ps);
+			conn.fecharResultSet(rs);
+			conn.fecharConexao();
+		}
+	}
+	
 	public  void update(Cliente cli) {
 		PreparedStatement ps = null;
 		
